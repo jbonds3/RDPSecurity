@@ -1,7 +1,10 @@
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
+
 $subScriptpath = [System.IO.Path]::Combine($PSScriptRoot, 'RDPFunctions.ps1')
 
 #---To Do, explain dot operator in code before calling variable
 . $subScriptpath
+
 
 #Add Forms and Drawing .NET classes to PS Session
 Add-Type -AssemblyName System.Windows.Forms
@@ -60,17 +63,17 @@ $enableRDPBtn.Add_Click({
 
 $rdpForm.Controls.Add($enableRDPBtn) 
 
-$disableRDPBtn = New-Object System.Windows.Forms.Button
-$disableRDPBtn.Text = "Disable"
-$disableRDPBtn.Location = New-Object System.Drawing.Point(150, 130)
+$modifyRDPBtn = New-Object System.Windows.Forms.Button
+$modifyRDPBtn.Text = "Modify"
+$modifyRDPBtn.Location = New-Object System.Drawing.Point(150, 130)
 
-$disableRDPBtn.Add_Click({
-    disableRDP
+$modifyRDPBtn.Add_Click({
+    modifyRDP -RDPport $rdpTextBox.Text
     $rdpTextBox.Text = readPort
    
 })
 
-$rdpForm.Controls.Add($disableRDPBtn)  
+$rdpForm.Controls.Add($modifyRDPBtn)  
 
 #Close Button
 $closeRDPBtn = New-Object System.Windows.Forms.Button
