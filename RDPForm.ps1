@@ -68,8 +68,19 @@ $modifyRDPBtn.Text = "Modify"
 $modifyRDPBtn.Location = New-Object System.Drawing.Point(150, 130)
 
 $modifyRDPBtn.Add_Click({
-    modifyRDP -RDPport $rdpTextBox.Text
-    $rdpTextBox.Text = readPort
+    #check if number between 1-65000
+    $intPortNum = [int]$rdpTextBox.Text
+
+    if ($portNum -match "^\d+$" -and $($intPortNum -ge 1) -and $($intPortNum -le 65535)) {
+                
+        modifyRDP -RDPport $rdpTextBox.Text
+        $rdpTextBox.Text = readPort
+        Start-Sleep 2
+        [System.Windows.Forms.MessageBox]::Show('Port was modified')
+    } else {
+        [System.Windows.Forms.MessageBox]::Show("Invalid Port Number: 1 - 65,535")
+    }
+    
    
 })
 
